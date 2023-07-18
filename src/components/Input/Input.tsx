@@ -6,7 +6,7 @@ const Input: React.FC<Props> = (props) => {
   return (
     <input
       className={clsx(
-        "d-inline-block w-full pl-4 pt-3 pr-3 pb-2.5",
+        "inline-block w-full pl-4 pt-3 pr-3 pb-2.5",
         "text-grey-light",
         "bg-black border border-grey-dark rounded",
         "transition",
