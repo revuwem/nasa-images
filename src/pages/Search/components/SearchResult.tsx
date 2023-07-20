@@ -47,6 +47,14 @@ const SearchResult: React.FC<Props> = ({
       : [];
   }, [data]);
 
+  const isListEnd = useMemo(() => {
+    return (
+      data?.[data.length - 1].collection.links.findIndex(
+        (link) => link.rel === "next"
+      ) === -1
+    );
+  }, [assets]);
+
   useEffect(() => {
     data && assets && assets.length > 0
       ? setTotalResults(data[0].collection.metadata.total_hits)
@@ -85,13 +93,13 @@ const SearchResult: React.FC<Props> = ({
       {!data && isValidating && <Paragraph>Loading...</Paragraph>}
       {error && <Paragraph>{error}</Paragraph>}
 
-      <div className="col-span-full grid place-items-center">
-        {assets.length > 0 && (
+      {assets.length > 0 && !isListEnd && (
+        <div className="col-span-full grid place-items-center">
           <Button disabled={isValidating} onClick={() => onLoadMoreBtnClick()}>
             {isValidating ? "Loading..." : "Load More"}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
