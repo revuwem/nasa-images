@@ -3,6 +3,7 @@ import CollectionCard from "@/components/CollectionCard";
 import Paragraph from "@/components/Paragraph";
 import { useEffect, useMemo } from "react";
 import useSWRInfinite from "swr/infinite";
+import { Fetcher } from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 type Props = {
@@ -11,7 +12,8 @@ type Props = {
   setTotalResults: (state: number) => void;
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher: Fetcher<UseSWRInfiniteResponseType, string> = (url: string) =>
+  fetch(url).then((res) => res.json());
 
 type UseSWRInfiniteResponseType = {
   collection: Collection;
@@ -22,7 +24,7 @@ const SearchResult: React.FC<Props> = ({
   shouldFetch,
   setTotalResults,
 }) => {
-  const { data, isLoading, size, setSize } =
+  const { data, error, isValidating, size, setSize } =
     useSWRInfinite<UseSWRInfiniteResponseType>(
       (index) =>
         shouldFetch
@@ -58,9 +60,9 @@ const SearchResult: React.FC<Props> = ({
   return (
     <div className="col-span-full">
       {/* List of results */}
-      {data && assets.length === 0 ? (
-        <Paragraph>No items found</Paragraph>
-      ) : (
+      {data && assets.length === 0 && <Paragraph>No items found</Paragraph>}
+
+      {assets && assets.length > 0 && (
         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {assets.map((item) => (
             <li key={uuidv4()}>
@@ -79,10 +81,14 @@ const SearchResult: React.FC<Props> = ({
           ))}
         </ul>
       )}
+
+      {!data && isValidating && <Paragraph>Loading...</Paragraph>}
+      {error && <Paragraph>{error}</Paragraph>}
+
       <div className="col-span-full grid place-items-center">
         {assets.length > 0 && (
-          <Button disabled={isLoading} onClick={() => onLoadMoreBtnClick()}>
-            {isLoading ? "Loading..." : "Load More"}
+          <Button disabled={isValidating} onClick={() => onLoadMoreBtnClick()}>
+            {isValidating ? "Loading..." : "Load More"}
           </Button>
         )}
       </div>
