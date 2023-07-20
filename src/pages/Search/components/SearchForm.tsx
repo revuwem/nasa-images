@@ -2,7 +2,15 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 
-const SearchForm = () => {
+type Props = {
+  onSearchQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchBtnClick: () => void;
+};
+
+const SearchForm: React.FC<Props> = ({
+  onSearchQueryChange,
+  onSearchBtnClick,
+}) => {
   return (
     <div
       className={clsx(
@@ -12,7 +20,13 @@ const SearchForm = () => {
       )}
     >
       {/* Search query */}
-      <Input type="text" id="q" name="q" placeholder="Search collections..." />
+      <Input
+        type="text"
+        id="q"
+        name="q"
+        placeholder="Search collections..."
+        onChange={onSearchQueryChange}
+      />
       {/* Year start */}
       <div className="contents sm:grid grid-flow-col gap-6 lg:gap-3">
         <Input
@@ -35,7 +49,7 @@ const SearchForm = () => {
           placeholder="Year end"
         />
       </div>
-      <Button>Search</Button>
+      <Button onClick={onSearchBtnClick}>Search</Button>
     </div>
   );
 };

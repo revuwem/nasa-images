@@ -8,7 +8,7 @@ const Button: React.FC<Props> = ({ children, ...props }) => {
   return (
     <button
       className={clsx(
-        "inline-block w-full pt-3 pb-2.5",
+        "inline-block pt-3 pb-2.5 px-12",
         "text-center text-black font-bold",
         "bg-grey-light rounded",
         "transition",
