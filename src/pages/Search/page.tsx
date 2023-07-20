@@ -28,7 +28,9 @@ const Search = () => {
         onSearchQueryChange={onSearchQueryChange}
         onSearchBtnClick={onSearchBtnClick}
       />
-      {totalResults && <SearchTotal>{totalResults.toString()}</SearchTotal>}
+      {totalResults !== null && (
+        <SearchTotal>{totalResults.toString()}</SearchTotal>
+      )}
       <SearchResult
         searchQuery={searchQuery}
         shouldFetch={shouldFetch}
