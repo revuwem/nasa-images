@@ -28,7 +28,7 @@ const SearchResult: React.FC<Props> = ({
     useSWRInfinite<UseSWRInfiniteResponseType>(
       (index) =>
         shouldFetch
-          ? `https://images-api.nasa.gov/search?q=${searchQuery}&media_type=image&page=${
+          ? `https://images-api.nasa.gov/search?${searchQuery}&media_type=image&page=${
               index + 1
             }`
           : null,

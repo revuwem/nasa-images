@@ -5,6 +5,8 @@ import { useCallback, useState } from "react";
 
 const Search = () => {
   const [searchVal, setSearchVal] = useState<string>("");
+  const [yearStartVal, setYearStartVal] = useState<string>("");
+  const [yearEndVal, setYearEndVal] = useState<string>("");
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [totalResults, setTotalResults] = useState<number | null>(null);
@@ -16,9 +18,28 @@ const Search = () => {
     []
   );
 
+  const onYearStartValChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setYearStartVal(e?.target?.value);
+    },
+    []
+  );
+
+  const onYearEndValChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setYearEndVal(e?.target?.value);
+    },
+    []
+  );
+
   const onSearchBtnClick = () => {
     if (searchVal === searchQuery) return;
-    setSearchQuery(searchVal);
+
+    const newSearchQuery = `${searchVal ? "q=" + searchVal : ""}${
+      yearStartVal ? "&year_start=" + yearStartVal : ""
+    }${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+
+    setSearchQuery(newSearchQuery);
     setTotalResults(null);
     setShouldFetch(true);
   };
@@ -27,6 +48,8 @@ const Search = () => {
     <>
       <SearchForm
         onSearchQueryChange={onSearchQueryChange}
+        onYearStartValChange={onYearStartValChange}
+        onYearEndValChange={onYearEndValChange}
         onSearchBtnClick={onSearchBtnClick}
       />
       {totalResults !== null && (

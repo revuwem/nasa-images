@@ -4,11 +4,15 @@ import clsx from "clsx";
 
 type Props = {
   onSearchQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onYearStartValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onYearEndValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchBtnClick: () => void;
 };
 
 const SearchForm: React.FC<Props> = ({
   onSearchQueryChange,
+  onYearStartValChange,
+  onYearEndValChange,
   onSearchBtnClick,
 }) => {
   return (
@@ -37,6 +41,7 @@ const SearchForm: React.FC<Props> = ({
           max={2022}
           step={1}
           placeholder="Year start"
+          onChange={onYearStartValChange}
         />
         {/* Year end */}
         <Input
@@ -47,6 +52,7 @@ const SearchForm: React.FC<Props> = ({
           max={2022}
           step={1}
           placeholder="Year end"
+          onChange={onYearEndValChange}
         />
       </div>
       <Button onClick={onSearchBtnClick}>Search</Button>
