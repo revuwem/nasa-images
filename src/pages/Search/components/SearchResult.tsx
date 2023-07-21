@@ -12,8 +12,21 @@ type Props = {
   setTotalResults: (state: number) => void;
 };
 
-const fetcher: Fetcher<UseSWRInfiniteResponseType, string> = (url: string) =>
-  fetch(url).then((res) => res.json());
+const fetcher: Fetcher<UseSWRInfiniteResponseType, string> = async (
+  url: string
+) => {
+  try {
+    const res = await fetch(url);
+    if (res?.ok) {
+      const json = await res.json();
+      return json;
+    } else {
+      throw new Error("Could not fetch data");
+    }
+  } catch (e) {
+    throw new Error("Could not fetch");
+  }
+};
 
 type UseSWRInfiniteResponseType = {
   collection: Collection;
@@ -91,7 +104,7 @@ const SearchResult: React.FC<Props> = ({
       )}
 
       {!data && isValidating && <Paragraph>Loading...</Paragraph>}
-      {error && <Paragraph>{error}</Paragraph>}
+      {error && <Paragraph>Error occured: {error?.message}</Paragraph>}
 
       {assets.length > 0 && !isListEnd && (
         <div className="col-span-full grid place-items-center">
