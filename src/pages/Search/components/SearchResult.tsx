@@ -51,10 +51,8 @@ const SearchResult: React.FC<Props> = ({
   const assets = useMemo(() => {
     return data
       ? data.reduce(
-          (acc: Asset[], item: UseSWRInfiniteResponseType) => [
-            ...acc,
-            ...item.collection.items,
-          ],
+          (acc: Asset[], item: UseSWRInfiniteResponseType) =>
+            item.collection ? [...acc, ...item.collection.items] : acc,
           []
         )
       : [];
