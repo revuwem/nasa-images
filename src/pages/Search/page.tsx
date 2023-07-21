@@ -17,6 +17,7 @@ const Search = () => {
   );
 
   const onSearchBtnClick = () => {
+    if (searchVal === searchQuery) return;
     setSearchQuery(searchVal);
     setTotalResults(null);
     setShouldFetch(true);
