@@ -6,6 +6,7 @@ import useSWRInfinite from "swr/infinite";
 import { swrFetcher } from "@/lib/swrFetcher";
 
 import { v4 as uuidv4 } from "uuid";
+import { useSearch } from "@/hooks/useSearch";
 
 type Props = {
   searchQuery: string;
@@ -13,43 +14,13 @@ type Props = {
   setTotalResults: (state: number) => void;
 };
 
-type UseSWRInfiniteResponseType = {
-  collection: Collection;
-};
-
 const SearchResult: React.FC<Props> = ({
   searchQuery,
   shouldFetch,
   setTotalResults,
 }) => {
-  const { data, error, isValidating, size, setSize } =
-    useSWRInfinite<UseSWRInfiniteResponseType>(
-      (index) =>
-        shouldFetch
-          ? `https://images-api.nasa.gov/search?${searchQuery}&media_type=image&page=${
-              index + 1
-            }`
-          : null,
-      swrFetcher
-    );
-
-  const assets = useMemo(() => {
-    return data
-      ? data.reduce(
-          (acc: Asset[], item: UseSWRInfiniteResponseType) =>
-            item.collection ? [...acc, ...item.collection.items] : acc,
-          []
-        )
-      : [];
-  }, [data]);
-
-  const isListEnd = useMemo(() => {
-    return (
-      data?.[data.length - 1].collection?.links?.findIndex(
-        (link) => link.rel === "next"
-      ) === -1
-    );
-  }, [data]);
+  const { data, assets, error, isValidating, isListEnd, size, setSize } =
+    useSearch({ searchQuery, shouldFetch });
 
   useEffect(() => {
     data && assets && assets.length > 0
