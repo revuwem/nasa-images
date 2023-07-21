@@ -1,9 +1,7 @@
 import Button from "@/components/Button";
 import CollectionCard from "@/components/CollectionCard";
 import Paragraph from "@/components/Paragraph";
-import { useEffect, useMemo } from "react";
-import useSWRInfinite from "swr/infinite";
-import { swrFetcher } from "@/lib/swrFetcher";
+import { useEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { useSearch } from "@/hooks/useSearch";
@@ -19,14 +17,21 @@ const SearchResult: React.FC<Props> = ({
   shouldFetch,
   setTotalResults,
 }) => {
-  const { data, assets, error, isValidating, isListEnd, size, setSize } =
-    useSearch({ searchQuery, shouldFetch });
+  const {
+    assets,
+    totalResults,
+    error,
+    isLoading,
+    isValidating,
+    isNoItemsFound,
+    isListEnd,
+    size,
+    setSize,
+  } = useSearch({ searchQuery, shouldFetch });
 
   useEffect(() => {
-    data && assets && assets.length > 0
-      ? setTotalResults(data[0].collection.metadata.total_hits)
-      : null;
-  }, [assets, data, setTotalResults]);
+    totalResults ? setTotalResults(totalResults) : null;
+  }, [totalResults, setTotalResults]);
 
   const onLoadMoreBtnClick = () => {
     void setSize(size + 1);
@@ -35,9 +40,9 @@ const SearchResult: React.FC<Props> = ({
   return (
     <div className="col-span-full">
       {/* List of results */}
-      {data && assets.length === 0 && <Paragraph>No items found</Paragraph>}
+      {isNoItemsFound && <Paragraph>No items found</Paragraph>}
 
-      {assets && assets.length > 0 && (
+      {!isNoItemsFound && (
         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {assets.map((item) => (
             <li key={uuidv4()}>
@@ -57,7 +62,7 @@ const SearchResult: React.FC<Props> = ({
         </ul>
       )}
 
-      {!data && isValidating && <Paragraph>Loading...</Paragraph>}
+      {isLoading && <Paragraph>Loading...</Paragraph>}
       {error && <Paragraph>Error occured: {error?.message}</Paragraph>}
 
       {assets.length > 0 && !isListEnd && (

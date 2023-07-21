@@ -33,6 +33,12 @@ export const useSearch = ({ searchQuery, shouldFetch }: Props) => {
       : [];
   }, [data]);
 
+  const totalResults = useMemo(() => {
+    return data && assets && assets.length > 0
+      ? data[0].collection.metadata.total_hits
+      : null;
+  }, [data, assets]);
+
   const isListEnd = useMemo(() => {
     return (
       data?.[data.length - 1].collection?.links?.findIndex(
@@ -41,5 +47,23 @@ export const useSearch = ({ searchQuery, shouldFetch }: Props) => {
     );
   }, [data]);
 
-  return { data, error, isValidating, size, setSize, assets, isListEnd };
+  const isLoading = useMemo(() => {
+    return !data && isValidating;
+  }, [data, isValidating]);
+
+  const isNoItemsFound = useMemo(() => {
+    return data && assets.length === 0;
+  }, [data, assets]);
+
+  return {
+    error,
+    isLoading,
+    isValidating,
+    isNoItemsFound,
+    size,
+    setSize,
+    assets,
+    totalResults,
+    isListEnd,
+  };
 };
