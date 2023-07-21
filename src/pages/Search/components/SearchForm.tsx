@@ -1,12 +1,14 @@
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
+import Paragraph from "@/components/Paragraph";
 
 type Props = {
   onSearchQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onYearStartValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onYearEndValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchBtnClick: () => void;
+  error?: string;
 };
 
 const SearchForm: React.FC<Props> = ({
@@ -14,6 +16,7 @@ const SearchForm: React.FC<Props> = ({
   onYearStartValChange,
   onYearEndValChange,
   onSearchBtnClick,
+  error,
 }) => {
   return (
     <div
@@ -56,6 +59,11 @@ const SearchForm: React.FC<Props> = ({
         />
       </div>
       <Button onClick={onSearchBtnClick}>Search</Button>
+      {error && (
+        <Paragraph>
+          <span className="text-red-500 font-bold">{error}</span>
+        </Paragraph>
+      )}
     </div>
   );
 };
