@@ -3,29 +3,14 @@ import CollectionCard from "@/components/CollectionCard";
 import Paragraph from "@/components/Paragraph";
 import { useEffect, useMemo } from "react";
 import useSWRInfinite from "swr/infinite";
-import { Fetcher } from "swr";
+import { swrFetcher } from "@/lib/swrFetcher";
+
 import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   searchQuery: string;
   shouldFetch: boolean;
   setTotalResults: (state: number) => void;
-};
-
-const fetcher: Fetcher<UseSWRInfiniteResponseType, string> = async (
-  url: string
-) => {
-  try {
-    const res = await fetch(url);
-    if (res?.ok) {
-      const json = await res.json();
-      return json;
-    } else {
-      throw new Error("Could not fetch data");
-    }
-  } catch (e) {
-    throw new Error("Could not fetch");
-  }
 };
 
 type UseSWRInfiniteResponseType = {
@@ -45,7 +30,7 @@ const SearchResult: React.FC<Props> = ({
               index + 1
             }`
           : null,
-      fetcher
+      swrFetcher
     );
 
   const assets = useMemo(() => {
