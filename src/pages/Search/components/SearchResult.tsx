@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useSearch } from "@/hooks/useSearch";
 
 type Props = {
-  searchQuery: string;
+  searchQuery: string | null;
   shouldFetch: boolean;
   setTotalResults: (state: number) => void;
 };

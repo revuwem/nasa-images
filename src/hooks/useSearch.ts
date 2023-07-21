@@ -8,7 +8,7 @@ type UseSWRInfiniteResponseType = {
 
 type Props = {
   shouldFetch: boolean;
-  searchQuery: string;
+  searchQuery: string | null;
 };
 
 export const useSearch = ({ searchQuery, shouldFetch }: Props) => {

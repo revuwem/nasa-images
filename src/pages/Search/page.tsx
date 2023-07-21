@@ -9,7 +9,7 @@ const Search = () => {
   const [yearEndVal, setYearEndVal] = useState<string>("");
   const [searchFormError, setSearchFormError] = useState<string>("");
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [totalResults, setTotalResults] = useState<number | null>(null);
 
   const onSearchQueryChange = useCallback(
@@ -34,9 +34,11 @@ const Search = () => {
   );
 
   const onSearchBtnClick = () => {
-    if (searchVal === searchQuery) return;
-
-    if (Number(yearStartVal) > Number(yearEndVal)) {
+    if (
+      yearStartVal &&
+      yearEndVal &&
+      Number(yearStartVal) > Number(yearEndVal)
+    ) {
       setSearchFormError("Year end should be equal or greater than year start");
       return;
     } else {
@@ -46,6 +48,8 @@ const Search = () => {
     const newSearchQuery = `${searchVal ? "q=" + searchVal : ""}${
       yearStartVal ? "&year_start=" + yearStartVal : ""
     }${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+
+    if (searchQuery === newSearchQuery) return;
 
     setSearchQuery(newSearchQuery);
     setTotalResults(null);
