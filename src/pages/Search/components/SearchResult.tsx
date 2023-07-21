@@ -60,11 +60,11 @@ const SearchResult: React.FC<Props> = ({
 
   const isListEnd = useMemo(() => {
     return (
-      data?.[data.length - 1].collection.links.findIndex(
+      data?.[data.length - 1].collection?.links?.findIndex(
         (link) => link.rel === "next"
       ) === -1
     );
-  }, [assets]);
+  }, [data]);
 
   useEffect(() => {
     data && assets && assets.length > 0
