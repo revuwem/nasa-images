@@ -7,7 +7,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className="min-h-screen bg-black grid grid-rows-layout gap-12 px-6 sm:px-12 lg:px-16 ">
       <Header />
-      <main className="grid grid-cols-5 gap-x-6 md:grid-cols-6">
+      <main className="grid grid-cols-5 auto-rows-min gap-x-6 md:grid-cols-6">
         {children}
       </main>
       <Footer />
