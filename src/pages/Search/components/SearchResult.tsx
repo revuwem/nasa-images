@@ -28,7 +28,7 @@ const SearchResult = () => {
       {isNoItemsFound && <Paragraph>No items found</Paragraph>}
 
       {!isNoItemsFound && (
-        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">
           {assets.map((item) => (
             <li key={uuidv4()}>
               <Link to={`collection/${item.data[0].nasa_id}`}>
