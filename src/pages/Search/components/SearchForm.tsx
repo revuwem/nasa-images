@@ -2,7 +2,7 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import Paragraph from "@/components/Paragraph";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { buildSearchQuery } from "@/lib/helpers";
 import { useSearchParams } from "react-router-dom";
 
@@ -17,6 +17,12 @@ const SearchForm: React.FC<Props> = ({ setTotalResults }) => {
   const [formError, setFormError] = useState<string>("");
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchVal(searchParams.get("q") ?? "");
+    setYearStartVal(searchParams.get("year_start") ?? "");
+    setYearEndVal(searchParams.get("year_end") ?? "");
+  }, [searchParams]);
 
   const onSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchVal(e?.target?.value);
