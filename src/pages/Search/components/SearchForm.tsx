@@ -25,17 +25,22 @@ const SearchForm: React.FC<Props> = ({
 
   const onSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchVal(e?.target?.value);
+    setFormError("");
   };
 
   const onYearStartValChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setYearStartVal(e?.target?.value);
+    setFormError("");
   };
 
   const onYearEndValChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setYearEndVal(e?.target?.value);
+    setFormError("");
   };
 
-  const onSearchBtnClick = () => {
+  const onSearchBtnClick = (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (
       yearStartVal &&
       yearEndVal &&
@@ -61,53 +66,59 @@ const SearchForm: React.FC<Props> = ({
   };
 
   return (
-    <div
-      className={clsx(
-        "col-span-full grid gap-3 mb-12",
-        "md:col-span-4",
-        "lg:col-span-full lg:grid-flow-col"
-      )}
-    >
-      {/* Search query */}
-      <Input
-        type="text"
-        id="q"
-        name="q"
-        placeholder="Search collections..."
-        value={searchVal}
-        onChange={onSearchQueryChange}
-      />
-      {/* Year start */}
-      <div className="contents sm:grid grid-flow-col gap-6 lg:gap-3">
+    <div className="col-span-full mb-12">
+      <form
+        className={clsx(
+          "grid gap-3 mb-8",
+          "md:col-span-4",
+          "lg:col-span-full lg:grid-flow-col"
+        )}
+      >
+        {/* Search query */}
         <Input
-          type="number"
-          id="yearStart"
-          name="yearStart"
-          min={1950}
-          max={new Date().getFullYear()}
-          step={1}
-          placeholder="Year start"
-          value={yearStartVal}
-          onChange={onYearStartValChange}
+          type="text"
+          id="q"
+          name="q"
+          placeholder="Search collections..."
+          value={searchVal}
+          onChange={onSearchQueryChange}
         />
-        {/* Year end */}
-        <Input
-          type="number"
-          id="yearEnd"
-          name="yearEnd"
-          min={1950}
-          max={new Date().getFullYear()}
-          step={1}
-          placeholder="Year end"
-          value={yearEndVal}
-          onChange={onYearEndValChange}
-        />
-      </div>
-      <Button onClick={onSearchBtnClick}>Search</Button>
+        {/* Year start */}
+        <div className="contents sm:grid grid-flow-col gap-6 lg:gap-3">
+          <Input
+            type="number"
+            id="yearStart"
+            name="yearStart"
+            min={1950}
+            max={new Date().getFullYear()}
+            step={1}
+            placeholder="Year start"
+            value={yearStartVal}
+            onChange={onYearStartValChange}
+          />
+          {/* Year end */}
+          <Input
+            type="number"
+            id="yearEnd"
+            name="yearEnd"
+            min={1950}
+            max={new Date().getFullYear()}
+            step={1}
+            placeholder="Year end"
+            value={yearEndVal}
+            onChange={onYearEndValChange}
+          />
+        </div>
+        <Button type="submit" onClick={onSearchBtnClick}>
+          Search
+        </Button>
+      </form>
       {formError && (
-        <Paragraph>
-          <span className="text-red-500 font-bold">{formError}</span>
-        </Paragraph>
+        <div className="col-span-full">
+          <Paragraph>
+            <span className="text-red-500 font-bold">{formError}</span>
+          </Paragraph>
+        </div>
       )}
     </div>
   );
