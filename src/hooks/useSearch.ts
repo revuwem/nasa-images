@@ -36,11 +36,8 @@ export const useSearch = () => {
   }, [data, assets]);
 
   const isListEnd = useMemo(() => {
-    return (
-      data?.[data.length - 1].collection?.links?.findIndex(
-        (link) => link.rel === "next"
-      ) === -1
-    );
+    const links = data?.[data.length - 1].collection?.links;
+    return !links || links?.findIndex((link) => link.rel === "next") === -1;
   }, [data]);
 
   const isLoading = useMemo(() => {
