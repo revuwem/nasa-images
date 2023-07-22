@@ -1,20 +1,14 @@
 import Button from "@/components/Button";
 import CollectionCard from "@/components/CollectionCard";
 import Paragraph from "@/components/Paragraph";
-import { useEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { useSearch } from "@/hooks/useSearch";
 import { Link } from "react-router-dom";
 
-type Props = {
-  setTotalResults: (state: number) => void;
-};
-
-const SearchResult: React.FC<Props> = ({ setTotalResults }) => {
+const SearchResult = () => {
   const {
     assets,
-    totalResults,
     error,
     isLoading,
     isValidating,
@@ -23,10 +17,6 @@ const SearchResult: React.FC<Props> = ({ setTotalResults }) => {
     size,
     setSize,
   } = useSearch();
-
-  useEffect(() => {
-    totalResults ? setTotalResults(totalResults) : null;
-  }, [totalResults, setTotalResults]);
 
   const onLoadMoreBtnClick = () => {
     void setSize(size + 1);

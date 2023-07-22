@@ -6,11 +6,7 @@ import { useEffect, useState } from "react";
 import { buildSearchQuery } from "@/lib/helpers";
 import { useSearchParams } from "react-router-dom";
 
-type Props = {
-  setTotalResults: (state: number | null) => void;
-};
-
-const SearchForm: React.FC<Props> = ({ setTotalResults }) => {
+const SearchForm = () => {
   const [searchVal, setSearchVal] = useState<string>("");
   const [yearStartVal, setYearStartVal] = useState<string>("");
   const [yearEndVal, setYearEndVal] = useState<string>("");
@@ -62,7 +58,6 @@ const SearchForm: React.FC<Props> = ({ setTotalResults }) => {
     if (searchParams.toString() === newSearchQuery) return;
 
     setSearchParams(newSearchQuery);
-    setTotalResults(null);
   };
 
   return (
