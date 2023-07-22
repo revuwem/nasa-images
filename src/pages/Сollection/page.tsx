@@ -9,6 +9,7 @@ import Location from "@/pages/Сollection/components/Location";
 import { useParams } from "react-router-dom";
 import { useCollection } from "@/hooks/useCollection";
 import { formatDate } from "@/lib/helpers";
+import BackButton from "@/pages/Сollection/components/BackButton";
 
 const Collection = () => {
   const { id } = useParams();
@@ -41,6 +42,9 @@ const Collection = () => {
       )}
       {data && (
         <>
+          <div className="col-span-full mb-12">
+            <BackButton />
+          </div>
           <section
             className={clsx(
               "col-span-full grid gap-6 mb-12",
