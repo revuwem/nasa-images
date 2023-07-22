@@ -2,22 +2,61 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import Paragraph from "@/components/Paragraph";
+import { useState } from "react";
 
 type Props = {
-  onSearchQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onYearStartValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onYearEndValChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearchBtnClick: () => void;
-  error?: string;
+  searchQuery: string | null;
+  setSearchQuery: (state: string) => void;
+  setShouldFetch: (state: boolean) => void;
+  setTotalResults: (state: number | null) => void;
 };
 
 const SearchForm: React.FC<Props> = ({
-  onSearchQueryChange,
-  onYearStartValChange,
-  onYearEndValChange,
-  onSearchBtnClick,
-  error,
+  searchQuery,
+  setSearchQuery,
+  setShouldFetch,
+  setTotalResults,
 }) => {
+  const [searchVal, setSearchVal] = useState<string>("");
+  const [yearStartVal, setYearStartVal] = useState<string>("");
+  const [yearEndVal, setYearEndVal] = useState<string>("");
+  const [formError, setFormError] = useState<string>("");
+
+  const onSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchVal(e?.target?.value);
+  };
+
+  const onYearStartValChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYearStartVal(e?.target?.value);
+  };
+
+  const onYearEndValChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYearEndVal(e?.target?.value);
+  };
+
+  const onSearchBtnClick = () => {
+    if (
+      yearStartVal &&
+      yearEndVal &&
+      Number(yearStartVal) > Number(yearEndVal)
+    ) {
+      setFormError("Year end should be equal or greater than year start");
+      return;
+    } else {
+      setFormError("");
+    }
+
+    const newSearchQuery = `${searchVal ? "q=" + searchVal : ""}${
+      yearStartVal ? "&year_start=" + yearStartVal : ""
+    }${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+
+    if (searchQuery === newSearchQuery) return;
+
+    setSearchQuery(newSearchQuery);
+    setTotalResults(null);
+    setShouldFetch(true);
+  };
+
   return (
     <div
       className={clsx(
@@ -32,6 +71,7 @@ const SearchForm: React.FC<Props> = ({
         id="q"
         name="q"
         placeholder="Search collections..."
+        value={searchVal}
         onChange={onSearchQueryChange}
       />
       {/* Year start */}
@@ -44,6 +84,7 @@ const SearchForm: React.FC<Props> = ({
           max={new Date().getFullYear()}
           step={1}
           placeholder="Year start"
+          value={yearStartVal}
           onChange={onYearStartValChange}
         />
         {/* Year end */}
@@ -55,13 +96,14 @@ const SearchForm: React.FC<Props> = ({
           max={new Date().getFullYear()}
           step={1}
           placeholder="Year end"
+          value={yearEndVal}
           onChange={onYearEndValChange}
         />
       </div>
       <Button onClick={onSearchBtnClick}>Search</Button>
-      {error && (
+      {formError && (
         <Paragraph>
-          <span className="text-red-500 font-bold">{error}</span>
+          <span className="text-red-500 font-bold">{formError}</span>
         </Paragraph>
       )}
     </div>
