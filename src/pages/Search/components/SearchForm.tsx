@@ -65,7 +65,7 @@ const SearchForm = () => {
       <form
         onSubmit={onFormSubmit}
         className={clsx(
-          "grid gap-3 mb-8",
+          "grid gap-3",
           "md:col-span-4",
           "lg:col-span-full lg:grid-flow-col"
         )}
@@ -108,7 +108,7 @@ const SearchForm = () => {
         <Button type="submit">Search</Button>
       </form>
       {formError && (
-        <div className="col-span-full">
+        <div className="col-span-full mt-8">
           <Paragraph>
             <span className="text-red-500 font-bold">{formError}</span>
           </Paragraph>
