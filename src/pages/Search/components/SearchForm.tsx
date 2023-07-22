@@ -7,11 +7,10 @@ import { buildSearchQuery } from "@/lib/helpers";
 import { useSearchParams } from "react-router-dom";
 
 type Props = {
-  setShouldFetch: (state: boolean) => void;
   setTotalResults: (state: number | null) => void;
 };
 
-const SearchForm: React.FC<Props> = ({ setShouldFetch, setTotalResults }) => {
+const SearchForm: React.FC<Props> = ({ setTotalResults }) => {
   const [searchVal, setSearchVal] = useState<string>("");
   const [yearStartVal, setYearStartVal] = useState<string>("");
   const [yearEndVal, setYearEndVal] = useState<string>("");
@@ -58,7 +57,6 @@ const SearchForm: React.FC<Props> = ({ setShouldFetch, setTotalResults }) => {
 
     setSearchParams(newSearchQuery);
     setTotalResults(null);
-    setShouldFetch(true);
   };
 
   return (

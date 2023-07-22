@@ -7,21 +7,15 @@ type UseSWRInfiniteResponseType = {
   collection: Collection;
 };
 
-type Props = {
-  shouldFetch: boolean;
-};
-
-export const useSearch = ({ shouldFetch }: Props) => {
+export const useSearch = () => {
   const [searchParams] = useSearchParams();
 
   const { data, error, isValidating, size, setSize } =
     useSWRInfinite<UseSWRInfiniteResponseType>(
       (index) =>
-        shouldFetch
-          ? `https://images-api.nasa.gov/search?${searchParams}&media_type=image&page=${
-              index + 1
-            }`
-          : null,
+        `https://images-api.nasa.gov/search?${searchParams}&media_type=image&page=${
+          index + 1
+        }`,
       swrFetcher
     );
 
