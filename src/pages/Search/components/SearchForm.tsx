@@ -4,24 +4,20 @@ import clsx from "clsx";
 import Paragraph from "@/components/Paragraph";
 import { useState } from "react";
 import { buildSearchQuery } from "@/lib/helpers";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
-  searchQuery: string | null;
-  setSearchQuery: (state: string) => void;
   setShouldFetch: (state: boolean) => void;
   setTotalResults: (state: number | null) => void;
 };
 
-const SearchForm: React.FC<Props> = ({
-  searchQuery,
-  setSearchQuery,
-  setShouldFetch,
-  setTotalResults,
-}) => {
+const SearchForm: React.FC<Props> = ({ setShouldFetch, setTotalResults }) => {
   const [searchVal, setSearchVal] = useState<string>("");
   const [yearStartVal, setYearStartVal] = useState<string>("");
   const [yearEndVal, setYearEndVal] = useState<string>("");
   const [formError, setFormError] = useState<string>("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchVal(e?.target?.value);
@@ -38,7 +34,7 @@ const SearchForm: React.FC<Props> = ({
     setFormError("");
   };
 
-  const onSearchBtnClick = (e: React.FormEvent) => {
+  const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (
@@ -58,9 +54,9 @@ const SearchForm: React.FC<Props> = ({
       yearEndVal,
     });
 
-    if (searchQuery === newSearchQuery) return;
+    if (searchParams.toString() === newSearchQuery) return;
 
-    setSearchQuery(newSearchQuery);
+    setSearchParams(newSearchQuery);
     setTotalResults(null);
     setShouldFetch(true);
   };
@@ -68,6 +64,7 @@ const SearchForm: React.FC<Props> = ({
   return (
     <div className="col-span-full mb-12">
       <form
+        onSubmit={onFormSubmit}
         className={clsx(
           "grid gap-3 mb-8",
           "md:col-span-4",
@@ -87,8 +84,8 @@ const SearchForm: React.FC<Props> = ({
         <div className="contents sm:grid grid-flow-col gap-6 lg:gap-3">
           <Input
             type="number"
-            id="yearStart"
-            name="yearStart"
+            id="year_start"
+            name="year_start"
             min={1950}
             max={new Date().getFullYear()}
             step={1}
@@ -99,8 +96,8 @@ const SearchForm: React.FC<Props> = ({
           {/* Year end */}
           <Input
             type="number"
-            id="yearEnd"
-            name="yearEnd"
+            id="year_end"
+            name="year_end"
             min={1950}
             max={new Date().getFullYear()}
             step={1}
@@ -109,9 +106,7 @@ const SearchForm: React.FC<Props> = ({
             onChange={onYearEndValChange}
           />
         </div>
-        <Button type="submit" onClick={onSearchBtnClick}>
-          Search
-        </Button>
+        <Button type="submit">Search</Button>
       </form>
       {formError && (
         <div className="col-span-full">

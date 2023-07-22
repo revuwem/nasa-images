@@ -5,14 +5,11 @@ import { useState } from "react";
 
 const Search = () => {
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [totalResults, setTotalResults] = useState<number | null>(null);
 
   return (
     <>
       <SearchForm
-        setSearchQuery={setSearchQuery}
-        searchQuery={searchQuery}
         setShouldFetch={setShouldFetch}
         setTotalResults={setTotalResults}
       />
@@ -20,7 +17,6 @@ const Search = () => {
         <SearchTotal>{totalResults.toString()}</SearchTotal>
       )}
       <SearchResult
-        searchQuery={searchQuery}
         shouldFetch={shouldFetch}
         setTotalResults={setTotalResults}
       />

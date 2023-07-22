@@ -1,5 +1,6 @@
 import { swrFetcher } from "@/lib/swrFetcher";
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import useSWRInfinite from "swr/infinite";
 
 type UseSWRInfiniteResponseType = {
@@ -8,15 +9,16 @@ type UseSWRInfiniteResponseType = {
 
 type Props = {
   shouldFetch: boolean;
-  searchQuery: string | null;
 };
 
-export const useSearch = ({ searchQuery, shouldFetch }: Props) => {
+export const useSearch = ({ shouldFetch }: Props) => {
+  const [searchParams] = useSearchParams();
+
   const { data, error, isValidating, size, setSize } =
     useSWRInfinite<UseSWRInfiniteResponseType>(
       (index) =>
         shouldFetch
-          ? `https://images-api.nasa.gov/search?${searchQuery}&media_type=image&page=${
+          ? `https://images-api.nasa.gov/search?${searchParams}&media_type=image&page=${
               index + 1
             }`
           : null,

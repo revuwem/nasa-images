@@ -8,16 +8,11 @@ import { useSearch } from "@/hooks/useSearch";
 import { Link } from "react-router-dom";
 
 type Props = {
-  searchQuery: string | null;
   shouldFetch: boolean;
   setTotalResults: (state: number) => void;
 };
 
-const SearchResult: React.FC<Props> = ({
-  searchQuery,
-  shouldFetch,
-  setTotalResults,
-}) => {
+const SearchResult: React.FC<Props> = ({ shouldFetch, setTotalResults }) => {
   const {
     assets,
     totalResults,
@@ -28,7 +23,7 @@ const SearchResult: React.FC<Props> = ({
     isListEnd,
     size,
     setSize,
-  } = useSearch({ searchQuery, shouldFetch });
+  } = useSearch({ shouldFetch });
 
   useEffect(() => {
     totalResults ? setTotalResults(totalResults) : null;

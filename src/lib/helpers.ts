@@ -13,7 +13,12 @@ export const buildSearchQuery = ({
   searchVal,
   yearStartVal,
   yearEndVal,
-}: BuildSearchQueryProps) =>
-  `${searchVal ? "q=" + searchVal : ""}${
-    yearStartVal ? "&year_start=" + yearStartVal : ""
-  }${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+}: BuildSearchQueryProps) => {
+  const q = `${searchVal ? "q=" + searchVal : ""}`;
+  const yearStart = `${yearStartVal ? "&year_start=" + yearStartVal : ""}`;
+  const yearEnd = `${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+
+  const query = q + yearStart + yearEnd;
+
+  return query;
+};
