@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import clsx from "clsx";
 import Paragraph from "@/components/Paragraph";
 import { useState } from "react";
+import { buildSearchQuery } from "@/lib/helpers";
 
 type Props = {
   searchQuery: string | null;
@@ -46,9 +47,11 @@ const SearchForm: React.FC<Props> = ({
       setFormError("");
     }
 
-    const newSearchQuery = `${searchVal ? "q=" + searchVal : ""}${
-      yearStartVal ? "&year_start=" + yearStartVal : ""
-    }${yearEndVal ? "&year_end=" + yearEndVal : ""}`;
+    const newSearchQuery = buildSearchQuery({
+      searchVal,
+      yearStartVal,
+      yearEndVal,
+    });
 
     if (searchQuery === newSearchQuery) return;
 
