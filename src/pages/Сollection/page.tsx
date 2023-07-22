@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { useCollection } from "@/hooks/useCollection";
 import { formatDate } from "@/lib/helpers";
 import BackButton from "@/pages/Сollection/components/BackButton";
+import Layout from "@/components/Layout";
 
 const Collection = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const Collection = () => {
   } = data?.data[0] ?? {};
 
   return (
-    <>
+    <Layout>
       {isLoading && <Paragraph>Loading...</Paragraph>}
       {error && (
         <Paragraph>
@@ -75,7 +76,7 @@ const Collection = () => {
           </section>
         </>
       )}
-    </>
+    </Layout>
   );
 };
 

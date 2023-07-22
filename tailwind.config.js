@@ -11,6 +11,9 @@ export default {
           light: "var(--color-grey-light)",
         },
       },
+      gridTemplateRows: {
+        layout: "min-content 1fr min-content",
+      },
     },
   },
   plugins: [],

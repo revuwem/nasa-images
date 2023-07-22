@@ -15,8 +15,8 @@
   -webkit-text-size-adjust: 100%;
 
   /* Colors */
-  --color-black: hsl(241, 11%, 16%);
+  --color-black: hsl(240, 20%, 10%);
   --color-white: hsl(0, 0%, 100%);
-  --color-grey-dark: hsl(241, 12%, 75%);
+  --color-grey-dark: hsl(241, 12%, 60%);
   --color-grey-light: hsl(241, 53%, 96%);
 }
