@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { useSearch } from "@/hooks/useSearch";
+import { Link } from "react-router-dom";
 
 type Props = {
   searchQuery: string | null;
@@ -46,17 +47,19 @@ const SearchResult: React.FC<Props> = ({
         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {assets.map((item) => (
             <li key={uuidv4()}>
-              <CollectionCard
-                data={{
-                  preview: item.links[0].href,
-                  title: item.data[0].title,
-                  location: item.data[0]?.location || "",
-                  author:
-                    item.data[0]?.photographer ||
-                    item.data[0]?.secondary_creator ||
-                    "",
-                }}
-              />
+              <Link to={`collection/${item.data[0].nasa_id}`}>
+                <CollectionCard
+                  data={{
+                    preview: item.links[0].href,
+                    title: item.data[0].title,
+                    location: item.data[0]?.location || "",
+                    author:
+                      item.data[0]?.photographer ||
+                      item.data[0]?.secondary_creator ||
+                      "",
+                  }}
+                />
+              </Link>
             </li>
           ))}
         </ul>
