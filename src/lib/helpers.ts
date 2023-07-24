@@ -22,3 +22,26 @@ export const buildSearchQuery = ({
 
   return query;
 };
+
+export const collectImages = (dataset: AssetImage[]) => {
+  let collection = [] as AssetImage[];
+  // group unique images by size (orig is excluded)
+  const groupBySize = dataset.reduce((acc, item) => {
+    const linkParts = item.href.split("~");
+    const identifier =
+      linkParts[linkParts.length - 1].match(/large|medium|small/);
+
+    if (!identifier) return acc;
+
+    acc[identifier[0]] = acc[identifier[0]] ?? [];
+    acc[identifier[0]].push(item);
+    return acc;
+  }, {} as { [key: string]: AssetImage[] });
+
+  const size = Object.keys(groupBySize)[0];
+  if (size && size.length > 0) {
+    collection = groupBySize[size];
+  }
+
+  return collection;
+};

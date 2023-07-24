@@ -1,3 +1,7 @@
+type AssetImage = {
+  href: string;
+};
+
 type Asset = {
   href: string;
   data: [
