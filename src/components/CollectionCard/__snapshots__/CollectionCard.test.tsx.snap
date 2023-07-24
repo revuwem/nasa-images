@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CollectionCard > should render correctly 1`] = `
+<div
+  className="group"
+>
+  <div
+    className="h-72 flex mb-3 overflow-hidden"
+  >
+    <img
+      alt=""
+      className="w-full h-full object-cover transition-all duration-500 scale-110 group-hover:scale-100"
+      src="preview.png"
+    />
+  </div>
+  <h3
+    className="text-xl text-grey-light font-bold mb-4 transition group-hover:text-blue-500"
+  >
+    Title
+  </h3>
+  <p
+    className="text-grey-dark mb-2"
+  >
+    author
+  </p>
+  <p
+    className="text-grey-dark italic"
+  >
+    location
+  </p>
+</div>
+`;
