@@ -1,34 +1,30 @@
+import { collectImages } from "@/lib/helpers";
 import { swrFetcher } from "@/lib/swrFetcher";
+import { useMemo } from "react";
 import useSWR from "swr";
-
-type UseSWRResponseType = {
-  collection: Collection;
-};
 
 export const useCollection = (id: string | undefined) => {
   const {
     data: collectionData,
     isLoading: isCollectionDataLoading,
     error: isCollectionDataError,
-  } = useSWR<UseSWRResponseType>(
+  } = useSWR<UseSWRResponseType<Collection>>(
     id ? `https://images-api.nasa.gov/search?nasa_id=${id}` : null,
     swrFetcher
   );
 
   const {
-    data: collectionImages,
-    isLoading: isCollectionImagesLoading,
-    error: isCollectionImagesError,
-  } = useSWR<string[]>(
-    collectionData?.collection.items[0].href
-      ? collectionData?.collection.items[0].href
-      : null,
+    data: asset,
+    isLoading: isAssetLoading,
+    error: isAssetError,
+  } = useSWR<UseSWRResponseType<AssetCollection>>(
+    id ? `https://images-api.nasa.gov/asset/${id}` : null,
     swrFetcher
   );
 
-  const collection = collectionImages
-    ?.filter((image) => image.includes("orig"))
-    .map((image) => ({ href: image }));
+  const collection = useMemo(() => {
+    return asset && collectImages(asset.collection.items);
+  }, [asset]);
 
   const data = collectionData?.collection.items[0];
 
@@ -36,8 +32,8 @@ export const useCollection = (id: string | undefined) => {
     data,
     collection,
     isLoading: isCollectionDataLoading,
-    isCollectionLoading: isCollectionImagesLoading,
+    isCollectionLoading: isAssetLoading,
     error: isCollectionDataError,
-    isCollectionError: isCollectionImagesError,
+    isCollectionError: isAssetError,
   };
 };

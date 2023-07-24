@@ -32,11 +32,21 @@ type Collection = {
   href: string;
   items: Asset[];
   metadata: {
-    total_hits: 305;
+    total_hits: number;
   };
   links: {
     rel: "prev" | "next";
     prompt: "Previous" | "Next";
     href: string;
   }[];
+};
+
+type AssetCollection = {
+  version: string;
+  href: string;
+  items: AssetImage[];
+};
+
+type UseSWRResponseType<T> = {
+  collection: T;
 };
