@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CollectionCard > should render correctly 1`] = `
+<footer
+  className="pt-8 pb-12 flex flex-wrap gap-6 justify-between items-center border-t border-grey-dark"
+>
+  <a
+    className="group"
+    href="/"
+    onClick={[Function]}
+  >
+    <div
+      className="flex gap-1 items-center"
+    >
+      <img
+        alt=""
+        className="w-14 h-14"
+        src="/nasa.svg"
+      />
+      <h1
+        className="text-grey-light font-bold text-xl transition group-hover:text-grey-dark"
+      >
+        NASA Images
+      </h1>
+    </div>
+  </a>
+  <p
+    className="text-base text-grey-dark"
+  >
+    Made with 💟 by
+     
+    <a
+      className="text-grey-light hover:text-grey-dark"
+      href="https://github.com/revuwem"
+      target="_blank"
+    >
+      revuwem
+    </a>
+  </p>
+</footer>
+`;
