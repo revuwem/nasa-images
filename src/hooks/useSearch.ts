@@ -3,15 +3,13 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import useSWRInfinite from "swr/infinite";
 
-type UseSWRInfiniteResponseType = {
-  collection: Collection;
-};
+type SearchResponseType = UseSWRResponseType<Collection>;
 
 export const useSearch = () => {
   const [searchParams] = useSearchParams();
 
   const { data, error, isValidating, size, setSize } =
-    useSWRInfinite<UseSWRInfiniteResponseType>(
+    useSWRInfinite<SearchResponseType>(
       (index) =>
         `https://images-api.nasa.gov/search?${searchParams}&media_type=image&page=${
           index + 1
@@ -22,7 +20,7 @@ export const useSearch = () => {
   const assets = useMemo(() => {
     return data
       ? data.reduce(
-          (acc: Asset[], item: UseSWRInfiniteResponseType) =>
+          (acc: Asset[], item: SearchResponseType) =>
             item.collection ? [...acc, ...item.collection.items] : acc,
           []
         )
