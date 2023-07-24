@@ -1,3 +1,4 @@
+import Paragraph from "@/components/Paragraph";
 import GalleryImage from "@/pages/Сollection/components/GalleryImage";
 
 type Props = {
@@ -16,7 +17,7 @@ const Gallery: React.FC<Props> = ({ items }) => {
           </li>
         ))
       ) : (
-        <p>No photos found</p>
+        <Paragraph>No photos found</Paragraph>
       )}
     </ul>
   );

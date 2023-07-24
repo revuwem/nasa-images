@@ -72,6 +72,9 @@ const Collection = () => {
             {isCollectionLoading && (
               <Paragraph>Loading collection...</Paragraph>
             )}
+            {isCollectionError && (
+              <Paragraph>Could not load collection images</Paragraph>
+            )}
             {!isCollectionLoading && <Gallery items={collection} />}
           </section>
         </>
