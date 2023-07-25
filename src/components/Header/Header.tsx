@@ -10,7 +10,7 @@ const Header = () => {
         target="_blank"
         className="text-grey-light hover:text-grey-dark transition"
       >
-        <div className="h-8">
+        <div className="h-8 w-8">
           <GithubMark />
         </div>
         <span className="sr-only">Link to GitHub site repo</span>

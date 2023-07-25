@@ -33,7 +33,7 @@ exports[`CollectionCard > should render correctly 1`] = `
       target="_blank"
     >
       <div
-        className="h-8"
+        className="h-8 w-8"
       >
         <svg
           fill="currentColor"
