@@ -4,13 +4,10 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { BrowserRouter } from "react-router-dom";
 import { useSearch } from "@/hooks/useSearch";
-import {
-  assetsMock,
-  assetsMockLastPage,
-} from "@/hooks/useSearch/__mocks__/data";
+import { assetsMock } from "@/hooks/useSearch/__mocks__/data";
 
 const server = setupServer(
-  rest.get("https://images-api.nasa.gov/search", (req, res, ctx) => {
+  rest.get("https://images-api.nasa.gov/search", (_req, res, ctx) => {
     return res(ctx.json(assetsMock));
   })
 );
