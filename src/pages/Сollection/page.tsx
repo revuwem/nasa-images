@@ -47,11 +47,7 @@ const Collection = () => {
             <BackButton />
           </div>
           <section
-            className={clsx(
-              "col-span-full grid gap-6 mb-12",
-              "sm:col-span-4",
-              "lg:col-span-full"
-            )}
+            className={clsx("col-span-full grid gap-6 mb-12", "sm:col-span-4")}
           >
             <div className="grid gap-4 lg:col-start-1 lg:row-start-1">
               <Heading as="h2">{title}</Heading>
