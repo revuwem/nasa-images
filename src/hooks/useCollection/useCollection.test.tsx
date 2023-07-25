@@ -26,9 +26,8 @@ const collectionAssetsResponse = {
 };
 
 const handlers = [
-  rest.get(
-    "https://images-api.nasa.gov/search?nasa_id=test",
-    (_req, res, ctx) => res(ctx.json(collectionDataResponse))
+  rest.get("https://images-api.nasa.gov/search", (_req, res, ctx) =>
+    res(ctx.json(collectionDataResponse))
   ),
   rest.get("https://images-api.nasa.gov/asset/test", (_req, res, ctx) =>
     res(ctx.json(collectionAssetsResponse))

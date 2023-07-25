@@ -5,7 +5,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 describe("Input", () => {
   it("should render", () => {
     const value = "value";
-    render(<Input value={value} />);
+    render(<Input value={value} readOnly />);
     const elem = screen.getByDisplayValue(value);
 
     expect(elem).toBeInTheDocument();
